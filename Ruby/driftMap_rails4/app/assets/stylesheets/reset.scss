@@ -1,0 +1,385 @@
+/* Fonts */
+@import url(http://fonts.googleapis.com/css?family=Ubuntu|Roboto|Raleway);
+
+/* Color */
+$light-blue: #C2D9EB;
+$dark-maroon: #552727;
+$dark-grey: #353535;
+$light-maroon: #A00505;
+$light-pink: #FCD1D8;
+$light-grey: #dadce8;
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	vertical-align: baseline;
+	text-align: center;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, menu, nav, section {
+	display: block;
+}
+html{
+	overflow-x: hidden;
+}
+body {
+	line-height: 1;
+	font-size: 1em;
+	padding-top: 70px;
+
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Ethan's resetStyleSheet */
+.clear-fix {
+	width: 100%;
+	height: 4px;
+	display: inline-block;
+	float: none;
+}
+
+.center{
+	margin: 0 auto;
+	display:block;
+	width: 100%;
+	text-align:center !important;
+	float:none !important;
+}
+
+.faded {
+	opacity: .7;
+}
+
+li {
+	list-style-type: none;
+}
+
+.mobile-only {
+	display: none;
+}
+
+.hidden {
+	display:none;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'Raleway', sans-serif;
+	color: $dark-maroon;
+}
+
+h1 {
+	font-size: 3.25em;
+}
+
+h2 {
+	font-size: 3em;
+}
+
+h3 {
+	font-size: 2.75em;
+}
+
+h4 {
+	font-size: 2em;
+}
+
+h5 {
+	font-size: 1.75em;
+	text-align: left;
+}
+
+h6 {
+	font-size: 1.5em;
+	text-align: left;
+	color: $dark-grey;
+}
+
+h2.page-title,
+h3.page-title,
+h4.waypoint-title {
+	margin-bottom: 15px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid $light-blue;
+	text-align: left;
+}
+
+h4.page-title {
+	margin-bottom: 8px;
+	border-bottom: 2px solid $light-blue;
+	padding-bottom: 5px;
+	font-style: italic;
+}
+
+p.page-title,
+label.page-title {
+	font-size: 24px;
+	font-style: italic;	
+	border-bottom: 2px solid $dark-maroon;
+	display: inline-block;
+	font-family: 'Roboto', sans-serif;
+	color: $dark-maroon;
+	margin-bottom: 4%;
+}
+
+p.tag-line {
+	font-size: 1em;
+	color: $light-blue;
+	font-style: italic;
+	position: relative;
+	top: 28px;
+	left: 20px;
+}
+
+p {
+	font-size: 1.3em;
+	font-family: 'ubuntu', sans-serif;
+	text-align: left;
+}
+
+span {
+	font-size: 1em;
+	font-family: 'ubuntu', sans-serif;
+}
+
+span.edit {
+	font-size: .9em;
+	font-style: italic;
+	color: #78acd3;
+}
+
+a {
+	cursor: pointer;
+}
+
+a:hover,
+a:focus,
+a:active {
+	text-decoration: none;
+}
+
+label {
+	margin: 5px 0;
+	text-align: left;
+}
+
+article {
+	margin-bottom: 10%;
+}
+
+input, textarea {
+	font-family: 'ubuntu', sans-serif;
+	margin-bottom: 4%;
+}
+
+input[type="text"],
+input[type="password"] {
+	width: 80%;
+	display: block;
+	max-width: 215px;
+    height: 30px;
+	background: #fff;
+	border-radius: 0;
+	border: 1px solid #ccc;
+}
+
+textarea {
+	width: 80%;
+	margin: 5px 0;
+	height: 150px;
+	display: block;
+}
+
+hr.gray-spacer {
+	width: 94%;
+	margin: 30px auto;
+	height: 7px;
+	background: #ccc;
+}
+
+hr.blue-spacer {
+	width: 94%;
+	margin: 30px auto;
+	height: 7px;
+	background: #C2D9EB;
+
+}
+
+/* flash messages */
+div.flash-messages {
+	width: 90%;
+	height: 55px;
+	margin: 0 0 1% 7%;	
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	position: absolute;
+}
+
+div.flash-danger {
+	background-color: #FCD1D8;
+}
+
+div.flash-success {
+	background-color: #C2D9EB;
+}
+
+p.flash {
+	line-height: 50px;
+}
+
+a.carousel-control {
+  background: none !important;
+}
+
+/* forms */
+form {
+	min-height: 395px;
+}
+
+form,
+form.edit_driftmap,
+form.new_waypoint,
+form.edit_waypoint,
+#friends > form,
+#journey form {
+	textarea {
+		margin: 0 0 7% 3%;
+	}
+
+	textarea {
+		padding: 4px;
+		border-radius: 0;
+		background: #fff;
+		border: 1px solid #ccc;	
+	}
+
+	#waypoint_title {
+		margin: 3% 0 8% 3%;
+	}
+}
+
+div.errors {
+	width: 40%;
+	min-height: 200px;
+	background-color: $light-grey;
+	padding: 2% 2% 2% 3%;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-bottom: 15px;
+}
+
+ul.errors-list li {
+	list-style-type: initial;
+}
+
+ul.errors-list li p {
+	line-height: 35px;
+	color: $light-maroon;
+}
+
+/* buttons */
+span.normal,
+button.normal,
+input.normal {
+	cursor: pointer;
+	line-height: 30px;
+	width: 150px;
+	height: 35px;
+	display: block;
+	color: rgb(51, 51, 51);
+	margin: 1% 10% 0 0;
+	background: $light-blue;
+	border-radius: 4px;
+	font-size: 1em !important;
+	font-family: 'Roboto', sans-serif;
+	border: 2px solid #fff;
+}
+
+span.normal:hover,
+button.normal:hover,
+input.normal:hover{
+	background: #fff;
+	border: 2px solid $light-blue;
+	font-size: .8em;
+}
+
+.input-group-addon,
+.bootstrap-datetimepicker-widget {
+	cursor: pointer;
+}
+
+/* Fonts */
+p.waypoint-title,
+span.waypoint-title {
+	font-size: 1.2em;
+	color: #C2D9EB;
+	font-style: italic;
+	margin: 3% 1%;
+	text-align: left;
+	cursor: pointer;
+}
+
+h4.waypoint-title {
+
+}
+
+// NavBar ////
+#driftmap-navbar {
+  font-family: 'Roboto' !important;
+}
+
+@media (max-width: 480px){
+	.application-container {
+		width: 100%;
+		padding: 0 3%;
+	}
+	.mobile-only {
+		display: block;
+	}	
+}
+
+@media (max-width: 821px){
+	div.flash-messages {
+		margin: 0 0 1% 15%;
+		width: 80%
+	}
+}
+
+@media (max-width: 480px){
+	div.flash-messages {
+		margin: 0 0 1% 7%;
+		width: 90%
+	}
+}

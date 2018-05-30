@@ -1,0 +1,87 @@
+@import 'colors';
+
+#content_creation {
+  /* new conent */  
+  h4.waypoint-title {
+    text-align: center;
+  }
+
+  p.content-description {
+    color: $maroon;
+  }
+
+  i {
+    color: #fff;
+    font-size: 5em;
+    line-height: 300px;
+  }
+
+  .cc-wrapper {
+     p.new-content-title {
+      text-align: center;
+      color: #C2D9EB;
+      margin-bottom: 5%;
+      font-size: 1.55em;
+      border-bottom: 1px solid #552727;
+      padding-bottom: 10px;
+    }
+  
+    .cc {
+      cursor: pointer;
+      opacity: .7;
+      height: 300px;
+    }
+
+    .cc:hover {
+      opacity: 1;
+      -moz-transform: scale(.93);
+      -webkit-transform: scale(1.05);
+      -o-transform: scale(.95);
+      -ms-transform: scale(.95);
+      -webkit-transform: scale(.95);
+      transform: scale(.95);
+
+      -webkit-transition: transform .3s ease-in-out;
+      -moz-transition:transform .3s ease-in-out;
+      -ms-transition:transform .3s ease-in-out;
+    }
+  }
+
+  .content-photo {
+    background-color: #C2D9EB;
+  }
+
+  .content-friend {
+    background-color: #84C77B;
+    
+  }
+
+  .content-trek {
+    background-color: #CEA5D4;
+  }
+
+  .content-essay {
+    background-color: #755151;
+  }
+
+  /* Begin Exisiting Content */
+  .existing-container {
+    margin: 2% 0 0;
+
+    ul {
+      li {
+        margin: 1% 0% 6%;
+
+        p {
+          text-align: center;
+          cursor: pointer;
+        }
+
+
+
+      }
+    }
+  }
+
+  /* End Exisiting Content */
+}

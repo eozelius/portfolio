@@ -1,0 +1,132 @@
+<% provide(:title, 'edit driftmap') %>
+
+<input type="hidden" value="1" id="driftmap_edit">
+
+<div class="driftmaps_edit">
+  <!-- LEAFLET -->
+  <div class="map-container">
+    <div id='map'></div>
+  </div>
+
+
+  <!-- BOTTOM HUD -->
+  <div class="hud-container" style="width: 27%; ">
+    <div class="hud-bottom" style="opacity: .95;">
+      <div class="user-details">
+        <%= form_for @driftmap, html: {multipart: true} do |f| %>
+          <%= f.hidden_field :init_x %>
+          <%= f.hidden_field :init_y %>
+          <%= f.hidden_field :init_zoom %>
+          <%= f.hidden_field :driftmap_id, value: @driftmap.id %>
+          <%= f.hidden_field :color_scheme, value: @driftmap.color_scheme %>
+          <%= content_tag :button, 'submit', class: 'normal' %>
+
+          <!-- title -->
+          <!--<h4 class="waypoint-title">Title</h4>-->
+          <%#= f.text_field :title, autofocus: true, style: 'margin-left:3%;' %>
+
+          <!-- driftmap description -->
+          <h4 class="waypoint-title">Title</h4>
+          <%= f.text_area :title %>
+
+          <h4 class="waypoint-title">Color Scheme</h4>
+
+          <div class="color-schemes">
+            <!-- normal -->
+            <%= f.radio_button(:color_scheme, :normal) %>
+            <p class="waypoint-title">normal</p><div class="clear-fix"></div>
+
+            <!-- default color-scheme -->
+            <%= f.radio_button(:color_scheme, :default) %>
+            <p class="waypoint-title">blue</p><div class="clear-fix"></div>
+
+            <!-- Satellite -->
+            <%= f.radio_button(:color_scheme, :satellite) %>
+            <p class="waypoint-title">satellite</p><div class="clear-fix"></div>
+
+            <!-- dark color-scheme -->
+            <%= f.radio_button(:color_scheme, :dark) %>
+            <p class="waypoint-title">dark</p><div class="clear-fix"></div>
+
+            <!-- gray -->
+            <%= f.radio_button(:color_scheme, :gray) %>
+            <p class="waypoint-title">gray</p><div class="clear-fix"></div>
+          </div>
+
+          <h6 class="waypoint-title">
+            To customize the location and zoom, and click save.
+          </h6>
+
+          <%= content_tag :span, 'submit', class: 'normal save' %>
+        <% end -%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if false %>
+<div class="container">
+  <%= form_for @driftmap do |f| %>
+    <%= f.hidden_field :init_x %>
+    <%= f.hidden_field :init_y %>
+    <%= f.hidden_field :init_zoom %>
+    <%= f.hidden_field :driftmap_id, value: @driftmap.id %>
+    <%= f.hidden_field :color_scheme, value: @driftmap.color_scheme %>
+
+    <div id="driftmap-timeline-container" class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+      <h4 class="waypoint-title" style="color:#C2D9EB;font-size:2.5em;margin-bottom:35px;width: -moz-fit-content;">Edit <%= @driftmap.title.html_safe %></h4>
+
+      <!-- title -->
+      <h4 class="waypoint-title">Title</h4>
+      <%= f.text_field :title, autofocus: true, style: 'margin-left:3%;' %>
+
+      <!-- driftmap description -->
+      <h4 class="waypoint-title">Description</h4>
+      <%= f.text_area :body %>
+
+      <h4 class="waypoint-title">Color Scheme</h4>
+
+      <div class="color-schemes">
+        <!-- normal -->
+        <%= f.radio_button(:color_scheme, :normal) %>
+        <p class="waypoint-title">normal</p><div class="clear-fix"></div>
+
+        <!-- default color-scheme -->
+        <%= f.radio_button(:color_scheme, :default) %>
+        <p class="waypoint-title">blue</p><div class="clear-fix"></div>
+
+        <!-- Satellite -->
+        <%= f.radio_button(:color_scheme, :satellite) %>
+        <p class="waypoint-title">satellite</p><div class="clear-fix"></div>
+
+        <!-- dark color-scheme -->
+        <%= f.radio_button(:color_scheme, :dark) %>
+        <p class="waypoint-title">dark</p><div class="clear-fix"></div>
+
+        <!-- gray -->
+        <%= f.radio_button(:color_scheme, :gray) %>
+        <p class="waypoint-title">gray</p><div class="clear-fix"></div>
+      </div>
+    </div>
+
+    <div id="dm-legend" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="map-container">
+        <h4 class="waypoint-title">
+          To customize the location and zoom, and click save.
+        </h4>
+
+
+      </div>
+
+      <div class="commit-buttons-container" style="width: 100%; margin-top: 5%">
+        <%= link_to(controller: 'waypoints', action: 'content_creation', waypoint_id: params[:waypoint_id], journey_id: params[:journey_id]) do %>
+
+          <span class="normal cancel" style="display: inline-block; margin: 30px 0; float: left">cancel</span>
+        <% end %>
+
+        <button name="commit" class="normal commit" type="submit" style="margin: 30px 0; float: right">save</button>
+      </div><div class="clearfix"></div>
+    </div>
+  <% end %>
+</div>
+<% end -%>

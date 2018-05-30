@@ -1,0 +1,35 @@
+<input type="hidden" id="driftmap_id" value="<%= @ethan.driftmap.id %>">
+
+<div id="home-page">
+  <!-- MAP -->
+  <div class="map-container">
+    <div id='map'></div>
+  </div>
+
+  <div class="hud-container">
+    <!-- BOTTOM HUD -->
+    <div class="hud-bottom">
+      <% @journeys.each_with_index do |journey, i| %>
+        <div class="journey journey-<%= journey.id %> hud-content-container">
+          <h6 data-journey="<%= journey.id %>" class="journey-title <%= 'active' if i == 0 %>"><%= journey.title %></h6>
+          <% journey.waypoints.each do |wp| %>
+            <p class="wp-title " data-waypoint="<%= wp.id %>"><%= wp.title %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Timeline Display -->
+  <div id="timeline-hud">
+
+  </div>
+</div>
+
+<% if Rails.env.production? %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.readme').click();
+    })
+  </script>
+<% end %>

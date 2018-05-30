@@ -1,0 +1,5 @@
+Welcome to driftMap.
+
+<%= @greeting %><%= @user.first_name %> thanks for creating your driftMap account.
+
+Click <%= link_to "here", edit_account_activation_url( @user.activation_token, email: @user.email) %> to activate your account.

@@ -1,0 +1,34 @@
+<% wp = Waypoint.find(params[:waypoint_id]) %>
+<input type="hidden" value="1" id="treks_new">
+
+<div id="essays" class="container new-essay">
+  <%= form_for @trek, html: {multipart: true} do |f| %>
+    <input type="hidden" name="waypoint_id" value="<%= params[:waypoint_id] %>">
+
+    <div id="driftmap-timeline-container" class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+      <h4 class="waypoint-title" style="color:#C2D9EB;font-size:2.5em;margin-bottom:35px;width: -moz-fit-content;">Create New Trek</h4>
+
+      <div class="trek-info">
+        <h4 class="waypoint-title">Trek Title</h4>
+        <%= f.text_field :title, style: 'margin-left:3%;', autofocus: true %>
+
+        <h4 class="waypoint-title" data-photo-index="0">Trek Coverphoto</h4>
+        <%= f.file_field :coverphoto, style: 'margin-left:3%;' %>
+
+        <h4 class="waypoint-title">Trek Description</h4>
+        <%= f.text_area :description, style: 'margin-left:3%;' %>
+      </div>
+    </div>
+
+    <div id="dm-legend" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="commit-buttons-container" style="width: 100%; margin-top 5%">
+        <%= link_to(controller: 'waypoints', action: 'content_creation', waypoint_id: params[:waypoint_id], journey_id: params[:journey_id]) do %>
+
+          <span class="normal cancel" style="display: inline-block; margin: 30px 0; float: left">cancel</span>
+        <% end %>
+
+        <button name="commit" class="normal commit" type="submit" style="margin: 30px 0; float: right">save</button>      
+      </div><div class="clearfix"></div>
+    </div>      
+  <% end %>
+</div>

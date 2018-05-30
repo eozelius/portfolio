@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  text-align: left;
+}
+
+/* general components */
+.title {
+  color: #17a2b8;
+  margin: 3% 1% 2%;
+  text-align: center;
+}
+/* end general components */
+
+
+
+/* Search */
+.search {
+  margin: 4% 1% 5%;
+}
+
+.search input[type="text"]{
+  width: 30%;
+  margin: 0 auto;
+  display: block;
+}
+/* end Search */
+
+
+
+
+/* Sources */
+.source {
+  width: 48%;
+  height: 50px;
+  display: inline-block;
+  margin: 0 1%;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 5px; 
+  cursor: pointer;
+  color: #6E4239;
+}
+
+.source:hover {
+  font-weight: 500;
+  border: 2px solid #ccc;
+}
+
+.source.active {
+  font-weight: 500;
+  border: 2px solid #ccc;
+  background-color: #f4f8ff;
+}
+/* end Sources */
+
+
+
+
+
+/* Articles */
+.article {
+  margin: 0 0 3%;
+}
+
+.card-header h6 {
+  color: #6E4239;
+  font-weight: 700;
+  margin: 0;
+}
+
+.articles h3.title {
+  width: 100%;
+  display: inline-block;
+}
+
+.sort-articles p {
+  width: auto;
+  display: inline-block;
+  padding-right: 2%;
+  cursor: pointer;
+  font-weight: 500;
+  color: #6E4239;
+}
+
+.sort-articles p.active {
+  font-weight: 700;
+
+}
+
+/* end Articles */
+

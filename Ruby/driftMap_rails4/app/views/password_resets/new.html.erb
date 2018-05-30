@@ -1,0 +1,15 @@
+<% provide(:title, "forgot password") %>
+
+<div class="container">
+  <%= form_for(:password_resets, url: password_resets_path) do |f| %>
+    <p>
+      <%= f.label :email %>
+      <%= f.text_field :email, autofocus: true, style: 'margin-top:0; height: 1.3em;' %>
+    </p>  
+
+    <p>
+      <button class="normal" type="submit">submit</button>
+    </p>
+    
+  <% end %>
+</div>

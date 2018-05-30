@@ -1,0 +1,57 @@
+<input type="hidden" value="1" id="journeys_edit">
+<input type="hidden" value="<%= @journey.id %>" id="journey_id">
+<input type="hidden" value="<%= @driftmap.id %>" id="driftmap_id">
+
+<div id="journey" class="edit-journey">
+	<div class="container">
+	<h4 class="waypoint-title" style="color:#C2D9EB;font-size:2.5em;margin-bottom:35px;width: -moz-fit-content; margin: 0 auto 2%;">edit <%= @journey.title.html_safe %></h4>
+		<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+
+			<%= form_for @journey, html: { multipart: true } do |f| %>
+				<div class="journey-content" data-journeycontent="<%= @journey.id %>">
+					<div class="journey-info">
+						<!-- Journey metadata -->
+						<h4 class="waypoint-title center">Journey Title</h4>
+						<%= f.text_field :title, { style: 'margin: 3% auto' } %>
+
+						<h4 class="change-cover-photo waypoint-title center" style="cursor: pointer; font-size: 1.35em">Click Here to Change Coverphoto</h4>
+
+						<!-- Timeline -->
+						<div id='dm-timeline-<%= @journey.id %>' style="width: 100%; height: 600px"></div>
+
+
+						<h4 class="waypoint-title center" style="margin: 3% auto;">Journey Description</h4>
+						<%= f.text_area :description, {style: 'margin: 5% auto'} %>
+					</div>
+				</div>
+			<% end %>
+		</div>
+
+		<div id="dm-legend" class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+			<!-- Leaflet -->
+			<div class="map-container hidden">
+		  	<div id='map'></div>
+			</div>
+
+			<!-- Accordian -->
+			<div id="accordian-container">
+			  <h5 class="waypoints-title">waypoints</h5>
+			  <div id="waypt-accord" class="panel-group markers-container wizard-step" role="tablist" aria-multiselectable="true"></div>
+			  <%= link_to '<span style="font-size: 1em; margin: 15px 10px 0 0; float:right; font-style:italic"> - add waypoint</span>'.html_safe, new_waypoint_path(journey_id: @journey.id) if user_is_home @user %><div class="clearfix" style="margin-bottom:15px;"></div>
+			</div>
+
+			<!-- Cancel Save Delete -->
+			<div class="commit-buttons-container" style="width: 100%; margin-top 5%">
+				<%= link_to user_path(current_user), style: 'margin: 0: display: inline-block;' do %>
+					<span class="normal cancel" style="display: inline-block; margin: 30px 0; float: left">cancel</span>
+				<% end %>
+
+				<button name="commit" class="normal commit" type="submit" style="margin: 30px 0; float: right">save</button>
+			</div><div class="clearfix"></div>
+
+			<%= link_to @journey, method: :delete, data: { confirm: "Are you Sure?" } do %>
+				<span class="pull-right" style="margin: 2% 0 0; color:red" rel="nofollow" data-method="delete" data-confirm="Are you sure">delete</span>
+			<% end %>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,165 @@
+@import 'colors';
+
+/* EDIT */
+.edit_driftmap {
+  .color-schemes {
+    p {
+      margin-top: -2px;
+      display: inline;
+      float:left;
+    }
+
+    input[type="radio"] {
+      float:left; 
+      margin-top: 0;
+    }
+  }
+}
+
+/* popup */
+.marker-box a.leaflet-popup-close-button {
+  padding: 15px 30px 0 0;
+}
+
+#map {
+  .leaflet-popup-content-wrapper {
+    margin: 0;
+    padding: 1.5% 2.5%;
+    width: 666px;
+    border-radius: 0;
+    overflow: hidden;
+
+    .leaflet-popup-content {
+      margin: 0;
+      width: 100% !important;
+    }
+
+    .content-icons-menu {
+      width: 50px;
+      display: inline;
+      float: left;
+    }
+
+    .content-icons-menu li {
+      width: 45px;
+      display: block;
+      height: 45px;
+      cursor: pointer;
+      margin: 30% 2%;
+      border-radius: 3px;
+    }
+
+    li.friends   { background-color: #84C77B; }
+    li.galleries { background-color: $light-blue; }
+    li.treks     { background-color: #CEA5D4; }
+    li.essays    { background-color: #755151; }
+    li.home-journey { background-color: #ccc }
+
+    i {
+      font-size: 2em;
+      line-height: 45px;
+      color: #444;
+    }
+
+    .waypoint-content-container {
+      float: right;
+      width: 560px;
+      margin: 0;
+    }
+
+    .waypoint-popup {
+      height: 410px;
+      overflow-y: scroll;
+      
+      .waypoint-popup-coverphoto-container {
+        display: block;
+        height: 100%;
+      }
+
+      img.waypoint-popup-coverphoto {
+        width: 44%;
+        height:auto;
+        margin: 0 2% 2%;
+        float: left;
+      }
+
+      /* description & coverphoto */
+      p.waypoint-popup-body {
+        font-size: 1.3em;
+      }
+
+      .waypoints-text {
+        height: 150px;
+        width: 100%;
+        display: block;
+      }
+
+      .waypoints-preview {
+        margin-bottom: 4%;
+
+        li,
+        p {
+          display: inline;
+        }
+      }
+
+      /* geft content */
+      .waypoint-content {
+        padding: 0 0 2%;
+
+        .view-content {
+          display: none;
+        }
+
+        .view-content.active {
+          display: block;
+        }
+
+        // Galleries
+        .galleries {
+          img {
+            width: 95%;
+            margin: 0 auto;
+          }
+        }
+
+        // Friends
+        .friends {
+          img {
+            width: 44%;
+            margin: 0 4% 4%;
+            float:left;
+          }
+        }
+
+        .essays {
+          img{
+            width: 44%;
+            margin: 4% 4% 4% 0;
+            float:left;
+          }
+        }
+      }
+    }
+  }
+}
+
+#home-page,
+#profile-page,
+.hud-page{
+  position: absolute;
+  top: 51px;
+  bottom: .1%;
+  right: 0;
+  left: 0;
+}
+
+.map-container,
+#map {
+  background: #C2D9EB;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}

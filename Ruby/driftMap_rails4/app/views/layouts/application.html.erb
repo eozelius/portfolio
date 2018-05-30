@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="mapping platform for backpackers and travelers">
+    <meta name="keywords" content="mapping backpacking blog travel ">
+    <meta name="author" content="Ethan Ozelius">
+
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag controller_name %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= csrf_meta_tags %>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+      </script>
+    <![endif]-->
+  </head>
+  <body>
+    <% if flash.any? %>
+      <% flash.each do |msgtype, msg| %>
+        <div class="flash-messages flash-<%= msgtype %> col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <p class="flash"><%= msg %></p>
+        </div>
+      <% end %>
+    <% end %>
+
+    <script type="text/javascript">
+      $(function(){
+        setTimeout(function(){
+          $('.flash-messages').remove();
+        }, 5000);
+      });
+    </script>
+
+    <nav id="driftmap-navbar" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#driftmap-nav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to 'driftmap', root_url, class: 'navbar-brand', style: 'font-family: "ubuntu", sans-serif' %>
+        </div>
+
+        <div class="collapse navbar-collapse" id="driftmap-nav">
+          <!-- Nav Left -->
+          <ul class="nav navbar-nav">
+            <li class="readme" data-toggle="modal" data-target="#readme-modal">
+              <a style="font-family: 'ubuntu', sans-serif">
+                read me
+              </a>
+            </li>
+          </ul>
+
+          <!-- Nav Right -->
+          <ul class="nav navbar-nav navbar-right">
+            <% if logged_in? %>
+              <li>
+                <%= link_to user_path(current_user), style: 'font-family: "ubuntu", sans-serif; padding: 10px 0 0 0' do %>
+                  <%= image_tag current_user.profile_pic, style: 'width: 30px; height: 30px; float: left: display: inline; border-radius: 4px;'  %>
+                <% end -%>
+              </li>
+              <li>
+                <%= link_to 'profile',  user_path(current_user), style: 'font-family: "ubuntu", sans-serif;'%>
+              </li>
+            <% else %>
+              <li>
+                <%= link_to 'log in', login_path, style: 'font-family: "ubuntu", sans-serif' %>
+              </li>
+              <li>
+                <%= link_to 'sign up', signup_path, style: 'font-family: "ubuntu", sans-serif' %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="app-container">
+      <%= yield %>
+    </div>
+  </body>
+</html>
+
+<% if Rails.env.production? %>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-83676035-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+<% end %>
+
+<div class="modal fade" id="readme-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Welcome to driftMaps</h4>
+      </div>
+      <div class="modal-body">
+        <div style="margin: 3% 0 4%">
+          <h5 style="font-style: italic;">What is driftMaps.com?</h5>
+          <p style="padding-left: 4%;">driftMaps.com integrates all the adventures of world exploration into an expressive cartographic experience.</p>
+        </div>
+
+        <div style="margin: 3% 0 4%">
+          <h5 style="font-style: italic;">How does it work?</h5>
+          <p style="padding-left: 4%;">driftMaps.com is organized into <span style="font-style: italic;">Journeys</span> and <span style="font-style: italic;">Way Points.</span>  For example a trek across South America, will have many stops along the way in cities, towns or parks.</p>
+        </div>
+
+        <div style="margin: 3% 0 4%">
+          <h5 style="font-style: italic;">What kind of stuff will a Way Point include?</h5>
+          <p style="padding-left: 4%;">For starters, Way Point content creation is organized into 3 categories: Photos, Friends and Essays. </p>
+        </div>
+
+        <div style="margin: 3% 0 4%">
+          <h5 style="font-style: italic;">Interested in contributing to driftMaps.com?</h5>
+          <p style="padding-left: 4%;">Great! Check out the <a href="https://github.com/eozelius/driftMap">github repo</a> and send me an email at <a href="mailto:e.ozelius@gmail.com?Subject=I%20Would%20Love%20To%20Contribute%20To%20driftMaps" target="_top">e.ozelius@gmail.com</a> </p>
+        </div>        
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<% provide(:title, @user.first_name) %>
+
+<input id="users_show" type="hidden" value="1">
+<input id="driftmap_id" type="hidden" value="<%= @driftmap.id %>">
+<!--<input id="user_id" type="hidden" value="<%= @user.id %>" >-->
+
+<div id="profile-page">
+	<%#= '<input id="user_is_home" type="hidden" value="1">'.html_safe if user_is_home @user %>
+
+  <!-- LEAFLET -->
+  <div class="map-container">
+    <div id='map'></div>
+  </div>
+
+  <div class="hud-container">
+    <!-- BOTTOM HUD -->
+    <div class="hud-bottom">
+      <% @journeys.each_with_index do |journey, i| %>
+        <div class="journey journey-<%= journey.id %> hud-content-container">
+          <h6 data-journey="<%= journey.id %>" class="journey-title <%= 'active' if i == 0 %>"><%= journey.title %></h6>
+          <% journey.waypoints.each do |wp| %>
+            <p class="wp-title " data-waypoint="<%= wp.id %>"><%= wp.title %><%= link_to '<span style="font-size: .8em;"> - edit</span>'.html_safe, edit_waypoint_path(wp) if user_is_home(@user) %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="profile-hud-container collapsed">
+    <div class="profile-hud collapsed">
+      <!-- HIDE/REVEAL button -->
+      <div class="feed-toggle-container">
+        <i class="fa fa-cogs"></i>
+      </div>
+
+      <!-- PROFILE PICTURE -->
+      <div class="profile-picture-container hidden">
+        <%= image_tag @user.profile_pic, class: 'pp' %>
+
+        <% if user_is_home(@user) %>
+          <%= link_to '<p>edit my info</p>'.html_safe, edit_user_path(@user) %>
+          <%= link_to '<p style="padding-top: 5px;">edit my driftmap</p>'.html_safe, edit_driftmap_path(@driftmap) %>
+          <%= link_to '<p style="padding-top: 5px;">create new journey</p>'.html_safe, new_journey_path %>
+        <% end -%>
+      </div>
+
+      <!-- User Details -->
+      <div class="user-details hidden">
+        <!-- Name -->
+        <h4><%= @user.first_name %> <%= @user.last_name %></h4>
+
+        <!-- Driftmap title/tagline -->
+        <p><%= @driftmap.title %></p>
+
+        <!-- Email -->
+        <%= "<p>#{@user.email}</p>".html_safe if user_is_home(@user) || admin_user %>
+
+        <!-- From -->
+        <% if @user.from %>
+          <p>from: <span><%= @user.from %></span></p>
+        <% end -%>
+        <!-- Current Location -->
+        <% if @user.gps %>
+          <p>current location: <span><%= @user.gps %></span></p>
+        <% end -%>
+      </div><div class="clearfix"></div>
+
+      <div class="users-journeys">
+        <%# @journeys.each do |j| %>
+        <%# end %>
+      </div>
+    </div>
+  </div>
+</div>

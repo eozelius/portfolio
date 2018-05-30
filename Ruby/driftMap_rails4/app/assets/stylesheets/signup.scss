@@ -1,0 +1,29 @@
+.signup-container {
+  margin-top: 4%;
+}
+
+.upload-container {
+	margin: 40px 0;
+}
+
+.login-link-container p {
+	margin: 50px 0;
+}
+
+.login-wrapper,
+.signup-container {
+	p {
+		color: #552727;
+	}
+
+	input[type="text"],
+	input[type="password"],
+	input[type="email"] {
+		color: #000;
+	}
+
+	span[type="submit"],
+	input[type="file"] {
+		font-size: .8em;
+	}
+}

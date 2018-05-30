@@ -1,0 +1,177 @@
+.profile-hud-container {
+  width: 71%;
+  position: absolute;
+  right: 2%;
+  top: 2%;
+
+  .feed-toggle-container {
+    width: 40px;
+    height: 29px;
+    display: inline;
+    background-color: #ccc;
+    float: right;
+    margin: 0 2% 0 0;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    padding-top: 5px;
+
+
+    &:hover {
+      background-color: #eee;
+    }
+  }
+
+  .profile-hud {
+    background-color: #EAEAEA;
+    opacity: .9;
+    padding: 1% 0;
+    height: 450px;
+
+    .profile-picture-container {
+      width: 25%;
+      padding: 0 0 3% 0;
+      margin-left: -6%;
+      display: inline-block;
+
+      img.pp {
+        width: 100%;
+        height: auto;
+        max-width: 265px;
+        float: left;
+        margin: 1% 5px 5px 0;
+      }
+    }
+
+    .user-details {
+      width: 58%;
+      display: inline-block;
+      padding: 1% 0 1% 3%;
+      vertical-align: top;
+
+      h4 {
+        color: #78acd3;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 3%;
+        text-align: left;
+      }
+
+      p {
+        font-size: 1.2em;
+        line-height:1.2em;
+        color: #552727;
+        font-weight: normal;
+        margin: 3%;
+
+        span {
+          color: #78acd3;
+        }
+      }
+    }
+  }
+}
+
+.profile-hud-container.collapsed {
+  left: 93%;
+
+  .profile-hud.collapsed {
+    height: 50px;
+    width: 50px;
+    background: transparent;
+  }
+
+}
+
+
+
+/////////////
+
+div.pro-part {
+	min-height: 400px;
+	margin-bottom: 55px;
+	margin-top: 20px;
+	padding-top: 10px;
+}
+
+/* Edit User Profile */
+.profile-details-container {
+	width: 95%;
+	height: 325px;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	padding: 3% 0 3% 3%;
+	margin-right: 0;
+
+	.profile h4 {
+		width: 95%;
+	}
+
+	.user-info p {
+		line-height: 30px;
+		&:first-child {
+			border-bottom: 1px solid #ADCDDB;
+			font-style: italic;
+		}
+	}
+}
+
+.edit-delete-map {
+	margin-top: 10px;
+	float: right;	
+
+	span {
+		display: inline;
+	}
+}
+
+
+@media (max-width: 480px){
+	div.profile {
+		width: 100%;
+	}
+	img.pp {
+		margin: 20px 0 20px;
+	}
+	#profile .start-new {
+		height: 270px;
+		margin-bottom: 0;
+	}
+}
+
+@media (max-width: 767px){
+	.profile-details {
+		margin-bottom: 30px;
+	}
+	.edit-delete-map a {
+		display: block;
+		margin: 10px 0;
+		text-align: left;
+	}
+	.edit-delete-map span {
+		display: none;
+	}
+	.profile-details-container img.pp {
+		width: 165px;
+		height: 165px;
+	}
+	#profile #driftmap-timeline-container {
+		margin: 0;
+	}
+	#profile .map-container {
+		top: 300px;
+	}
+}
+
+@media (max-width: 480px){
+
+}
+
+@media (max-width: 430px){
+	.profile-details-container img.pp {
+		width:99%;
+		height: auto;
+		display: block;
+		margin: 0 auto; 
+	}
+}

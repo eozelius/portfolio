@@ -1,0 +1,32 @@
+<input id="journeys_new" type="hidden" value="1">
+
+<div id="journey" class="new-journey container">
+	<%= form_for @journey, html: { multipart: true } do |f| %>
+		<div id="driftmap-timeline-container" class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+			<h4 class="waypoint-title" style="color:#C2D9EB;font-size:2.5em;margin-bottom:35px;width: -moz-fit-content;">Create New Journey</h4>
+
+			<div class="journey-info">
+				<!-- Journey metadata -->
+				<h4 class="waypoint-title">Journey Title</h4>
+				<%= f.text_field :title, { style: 'margin-left:3%;', autofocus: true } %>
+
+				<!-- Journey Cover Photo -->
+				<h4 class="waypoint-title">Journey Coverphoto</h4>
+				<%= f.file_field :coverphoto, { style: 'margin-left:3%;' } %>
+
+				<h4 class="waypoint-title">Journey Description</h4>
+				<%= f.text_area :description %>
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+			<div class="commit-buttons-container" style="width: 100%;">
+				<%= link_to user_path(current_user), style: 'margin: 0: display: inline-block;' do %>
+					<span class="normal cancel" style="display: inline-block; margin: 30px 0; float: left">cancel</span>
+				<% end %>
+
+				<input name="commit" class="normal commit" type="submit" style="margin: 30px 0; float: right" value="save">
+			</div><div class="clearfix"></div>
+		</div>
+	<% end %>
+</div>

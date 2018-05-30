@@ -1,0 +1,75 @@
+<% provide(:title, 'sign up') %>
+
+<input type="hidden" value="1" id="users_new">
+
+<div class="signup-container container">
+	<%= form_for(@user) do |f| %>
+		<!-- STEP 1 -->
+	  <div class="step-1-slide signup-text">
+	    <% if @user.errors.any? %>
+	      <div class="errors">
+	        <p class="title">whoops</p>
+	        <ul class="errors-list">
+	          <% @user.errors.full_messages.each do |msg| %>
+	            <li><p><%= msg %></p></li>
+	          <% end %>
+	        </ul>
+	      </div>  
+	    <% end %>
+	    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+	      <p>
+	      	<%= f.label :first_name %>
+	      	<%= f.text_field :first_name %>
+	      </p> 
+
+	      <p>
+	      	<%= f.label :last_name %>
+	      	<%= f.text_field :last_name %>
+	      </p>  
+
+	      <p>
+	      	<%= f.label :email %>
+	      	<%= f.text_field :email %>
+	      </p>
+
+	      <p>
+	        <%= f.label :password %>
+	      	<%= f.password_field :password %>
+	      </p>
+
+	      <p>
+	        <%= f.label :password_confirmation %>
+	      	<%= f.password_field :password_confirmation %>
+	      </p>
+	    </div><!-- end left-hand text -->
+
+	    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+	      <p>
+	        <%= f.label :from, 'Where are you from?' %>
+	        <%= f.text_field :from %>
+	      </p>
+
+	      <p>
+	        <%= f.label :gps, 'Current location' %>
+	        <%= f.text_field :gps %>
+	      </p>
+
+	      <p class="upload-container">
+	        <%= f.label 'profile picture' %>
+	        <%= f.file_field :profile_pic, accept: 'image/jpeg, image/gif, image/png, image/jpg' %>
+	      </p>
+	      
+	    </div>
+
+			<p class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+				<%= content_tag :button, 'submit', class: 'normal' %>
+			</p>
+
+			<div class="login-link-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<%= link_to login_path do %>
+					<p style="color:#C2D9EB">already have an account? | log in</p>
+				<% end %>
+			</div>
+	  </div>
+	<% end %>
+</div>

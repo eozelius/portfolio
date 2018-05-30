@@ -1,0 +1,52 @@
+<% wp = Waypoint.find(params[:waypoint_id]) %>
+
+<input type="hidden" value="1" id="friends_new">
+
+<div id="friends" class="container new-friend">
+  <%= form_for @friend, html: {multipart: true} do |f| %>
+    <input type="hidden" name="waypoint_id" value="<%= params[:waypoint_id] %>">
+    <%= f.hidden_field :x, value: wp.x %>
+    <%= f.hidden_field :y, value: wp.y %>
+
+    <div id="driftmap-timeline-container" class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+      <h4 class="waypoint-title" style="color:#C2D9EB;font-size:2.5em;margin-bottom:35px;width: -moz-fit-content;">Create New Friend</h4>
+
+      <div class="friend-info">
+        <h4 class="waypoint-title">First Name</h4>
+        <%= f.text_field :first_name, { style: 'margin-left:3%;', autofocus: true } %>
+
+        <h4 class="waypoint-title">Last Name</h4>
+        <%= f.text_field :last_name, { style: 'margin-left:3%;' } %>
+
+        <h4 class="waypoint-title" data-photo-index="0">Photo</h4>
+        <%= f.file_field :photo, { style: 'margin-left:3%;' } %>
+        
+        <h4 class="waypoint-title">Email</h4>
+        <%= f.text_field :email, { style: 'margin-left:3%;' } %>
+
+        <h4 class="waypoint-title">Description</h4>
+        <%= f.text_area :description, { style: 'margin-left:3%;' } %>
+
+      </div>
+    </div>
+
+    <div id="dm-legend" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="map-container">
+        <h4 class="waypoint-title">
+          click anywhere on the map to adjust the location of your friend
+        </h4>
+
+        <div id="map"></div>
+      </div>
+
+      <div class="commit-buttons-container" style="width: 100%; margin-top 5%">
+        <%= link_to(controller: 'waypoints', action: 'content_creation', waypoint_id: params[:waypoint_id], journey_id: params[:journey_id]) do %>
+
+          <span class="normal cancel" style="display: inline-block; margin: 30px 0; float: left">cancel</span>
+        <% end %>
+
+        <button name="commit" class="normal commit" type="submit" style="margin: 30px 0; float: right">save</button>      
+      </div><div class="clearfix"></div>
+    </div>
+  <% end %>
+</div>

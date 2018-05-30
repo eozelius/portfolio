@@ -1,0 +1,136 @@
+<div class="container" id="content_creation">
+  <div class="new-content container">
+    <h4 class="waypoint-title" style="color:#C2D9EB;font-size:2.5em;margin: 3% 15% 4%;">Tell a Story about <%= @waypoint.title.html_safe.capitalize %></h4>
+
+    <!-- PHOTOS/VIDEOS -->
+    <div class="cc-wrapper col-lg-3 col-md-3 col-sm-3 col-xs-12">
+      <%= link_to new_gallery_path(journey_id: @journey.id, waypoint_id: @waypoint.id) do %>
+        <p class="new-content-title">Galleries</p>
+        <div class="cc content-photo">
+          <i class="fa fa-camera"></i>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- FRIENDS -->
+    <div class="cc-wrapper col-lg-3 col-md-3 col-sm-3 col-xs-12">
+      <%= link_to new_friend_path(journey_id: @journey.id, waypoint_id: @waypoint.id) do %>
+        <p class="new-content-title">Friends</p>
+        <div class="cc content-friend">
+          <i class="fa fa-user-circle"></i>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- ESSAYS -->
+    <div class="cc-wrapper col-lg-3 col-md-3 col-sm-3 col-xs-12">
+      <%= link_to new_essay_path journey_id: @journey.id, waypoint_id: @waypoint.id do %>
+        <p class="new-content-title">Essays</p>
+        <div class="cc content-essay">
+          <i class="fa fa-pencil-square-o"></i>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- TREKS -->
+    <div class="cc-wrapper col-lg-3 col-md-3 col-sm-3 col-xs-12">
+      <%= link_to new_trek_path journey_id: @journey.id, waypoint_id: @waypoint.id do %>
+        <p class="new-content-title">Treks</p>
+        <div class="cc content-trek">
+          <i class="fa fa-compass"></i>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- EXISTING CONTENT -->
+  <div class="existing-container container">
+    <!-- PHOTOS/VIDEOS -->
+    <div class="cc-wrapper col-lg-3 col-md-3 col-sm-3 col-xs-12">
+      <% if @galleries.any? %>
+        <div class="existing-galleries">
+          <ul>
+            <% @galleries.each do |g| %>
+              <%= link_to edit_gallery_path g do %>
+                <li><p class="content-description"><%= g.title %><span class="edit"> - edit</span></p></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <%= link_to new_gallery_path journey_id: @journey.id, waypoint_id: @waypoint.id do %>
+          <span class="edit">new gallery</span>
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- FRIENDS -->
+    <div class="cc-wrapper col-lg-3 col-md-3 col-sm-3 col-xs-12">
+      <% if @friends.any? %>
+        <div class="existing-friends">
+          <ul>
+            <% @friends.each do |f| %>
+              <%= link_to edit_friend_path f do %>
+                <li><p class="content-description"><%= "#{f.first_name} #{f.last_name}" %><span class="edit"> - edit</span></p></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <%= link_to new_friend_path journey_id: @journey.id, waypoint_id: @waypoint.id do %>
+          <span class="edit">new friend</span>
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- ESSAYS -->
+    <div class="cc-wrapper col-lg-3 col-md-3 col-sm-3 col-xs-12">
+      <% if @essays.any? %>
+        <div class="existing-essays">
+          <ul>
+            <% @essays.each do |e| %>
+              <li>
+                <%= link_to edit_essay_path e do %>
+                  <p class="content-description"><%= e.title %><span class="edit"> - edit</span></p></li>
+                <% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <%= link_to new_essay_path journey_id: @journey.id, waypoint_id: @waypoint.id do %>
+          <span class="edit">new essay</span>
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- TREKS -->
+    <div class="cc-wrapper col-lg-3 col-md-3 col-sm-3 col-xs-12">
+      <% if @treks.any? %>
+        <div class="existing-treks">
+          <ul>
+            <% @treks.each do |t| %>
+              <%= link_to edit_trek_path t do %>
+                <li><p class="content-description"><%= t.title %><span class="edit"> - edit</span></p></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <%= link_to new_trek_path journey_id: @journey.id, waypoint_id: @waypoint.id do %>
+          <span class="edit">new trek</span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Back/skip -->
+  <div class="col-xs-12" style="margin-top: 9%">
+    <%= link_to({ controller: 'journeys', action: 'edit', id: @journey.id }, { style: 'margin:0'}) do %>
+      <button class="normal" style="float:left;margin:0">back</button>
+    <% end %>
+
+    <%= link_to current_user do %>
+      <button class="normal" style="float:right; margin:0">skip</button>
+    <% end %>
+  </div><div class="clearfix"></div>
+</div>

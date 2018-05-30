@@ -1,0 +1,317 @@
+var DriftMapLeaflet = function(){
+  // Private Variables
+  var indexer = []
+  var journeyIndexer = []
+
+  L.Icon.Default.imagePath = "<%= (Rails.root + '/assets/leaflet').to_s %>";
+
+  /* Custom Makers */
+  var maroonMarker = L.icon({ 
+    iconUrl: "<%= (Rails.root + '/assets/leaflet/marker-maroon-icon.png').to_s %>",
+    shadowUrl: "<%= (Rails.root + '/assets/leaflet/marker-shadow.png').to_s %>",
+    popupAnchor:  [0, -35]
+  });
+
+  var blueMarker = L.icon({
+    iconUrl: "<%= (Rails.root + '/assets/leaflet/marker-icon.png').to_s %>",
+    shadowUrl: "<%= (Rails.root + '/assets/leaflet/marker-shadow.png').to_s %>",
+    popupAnchor:  [0, -35]
+  });
+
+  // Private Methods
+  function getColorScheme(color_scheme){
+    var color =''
+    switch (color_scheme) {
+      case 'normal':
+        color = 'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}';
+        break;
+      case 'satellite':
+        color = 'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}';
+        break;
+      case 'gray':
+        color = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}';
+        break;
+      case 'dark':
+        color = 'https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}';
+        break;
+      default:
+        color = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png'; // default offwhite on blue
+        break;
+    }
+    return color;
+  }
+
+  function drawMap(driftmap){
+    var mapColor = getColorScheme(driftmap.color_scheme)
+    m = L.map('map').setView([driftmap.init_x, driftmap.init_y], driftmap.init_zoom);
+    L.tileLayer(mapColor + '?access_token={accessToken}',
+      { attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        //minZoom: 4,
+        id: 'eozelius77.j4hekake',
+        accessToken: "<%= ENV['MAPBOX_SECRET_KEY'] %>"
+      }).addTo(m);
+
+    // Zoom in/out buttons should be in top right, instead of top left.
+    $('.leaflet-control-container .leaflet-top.leaflet-left').removeClass('leaflet-top').addClass('leaflet-bottom leaflet-right')
+
+    m.on('click', function(e){
+      window.e = e
+	
+      console.log('lat: ' + e.latlng.lat)
+	console.log("lng: " + e.latlng.lng)
+    })
+    window.m = m;
+  }
+
+  function constructJourneyPopup(journey, waypoints){
+    var lat = journey.x;
+    var lng = journey.y;
+    var coverphoto = journey.coverphoto.url == null ? '' : '<img class="waypoint-popup-coverphoto" src="'+ journey.coverphoto.url +'">'
+    var journey_waypoints = ''
+    for(var w in waypoints){ journey_waypoints += '<li data-waypoint="'+ waypoints[w].id +'"><p class="waypoint-title" >' + waypoints[w].title + '</p>' }
+
+    var j_popupContent =  '<div class="waypoint-popup" data-waypoint="'+ journey.id +'">' +
+                            '<div class="waypoint-text">' +
+                              '<div class="waypoint-popup-coverphoto-container">' +
+                                coverphoto +
+                              '</div>' +
+                              '<h4 class="waypoint-popup-title">'+ journey.title +'</h4>' +
+                              '<p class="waypoint-popup-body ">' +
+                                journey.description +
+                              '</p>' +
+                            '</div>' +
+                            '<div class="waypoints-preview">' +
+                              '<ul>' + journey_waypoints + '</ul>' +
+                            '</div>' +
+                          '</div>';
+
+    var jMarker = L.marker([lat, lng]).addTo(m);
+    var jPopup  = L.popup({ className: 'waypoint-popup' }).setLatLng([lat, lng]).setContent(j_popupContent);
+    m.panTo([lat, lng])
+    jMarker.bindPopup(jPopup);
+
+    journeyIndexer.push({
+      id: journey.id,
+      leaflet: {
+        marker: jMarker,
+        popup: jPopup
+      }
+    });
+  }
+
+  function constructWaypointPopup(waypoint){
+    /* Add Marker to Map */
+    var id  = waypoint.id;
+    var lat = waypoint.x;
+    var lng = waypoint.y;
+    var title = waypoint.title;
+    var body  = waypoint.body;
+    var coverphoto = waypoint.coverphoto.url == null ? '' : '<img class="waypoint-popup-coverphoto" src="'+ waypoint.coverphoto.url +'" />';
+
+    var contentIcons = '';
+
+    contentIcons += '<li class="home-journey" data-request-type="home" data-waypoint="'+ id +'"><i class="fa fa-map-o"></i></li>'
+
+    if(waypoint.content.galleries.length > 0)
+      contentIcons += '<li class="galleries" data-request-type="galleries" data-waypoint="'+ id +'"><i class="fa fa-camera"></i></li>'
+
+    if(waypoint.content.friends.length > 0)
+      contentIcons += '<li class="friends"   data-request-type="friends"   data-waypoint="'+ id +'"><i class="fa fa-user-circle"></i></li>'
+    
+    if(waypoint.content.essays.length > 0)
+      contentIcons += '<li class="essays"    data-request-type="essays"    data-waypoint="' + id + '"><i class="fa fa-pencil-square-o"></i></li>'
+
+    if(waypoint.content.treks.length > 0)
+      contentIcons += '<li class="treks"     data-request-type="treks"     data-waypoint="' + id + '"><i class="fa fa-compass"></i></li>';
+
+    var galleries = ''
+    for(var g in waypoint.content.galleries){
+      var currentGallery = waypoint.content.galleries[g]
+      if(currentGallery.images.length > 0){
+        var slides = '';
+        var indicators = '<ol class="carousel-indicators">';
+        var controls =  '<a class="left carousel-control" href="#gallery-carousel" role="button" data-slide="prev">' +
+                          '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>' +
+                          '<span class="sr-only">Previous</span>' +
+                        '</a>' +
+                        '<a class="right carousel-control" href="#gallery-carousel" role="button" data-slide="next">' +
+                          '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>' +
+                          '<span class="sr-only">Next</span>' +
+                        '</a>';
+
+        // Slides
+        for(var gallery_image in currentGallery.images){
+          slides +=  '<div class="item ';
+          if(gallery_image == 0){
+            slides += 'active" >'
+          } else {
+            slides += '">';
+          }
+          slides +=  '<img src ="' + currentGallery.images[gallery_image].url + '" /></div>';
+        }
+
+        galleries +=  '<h4 class="waypoint-title">' + currentGallery.title + '</h4>' +
+                      '<div id="gallery-carousel" class="carousel slide" data-ride="carousel">' +
+                        '<div class="carousel-inner" role="listbox">' +
+                        slides +
+                      '</div>' +
+                      controls +
+                    '</div>';
+      }
+    }
+
+    var friends = ''
+    for(var f in waypoint.content.friends){
+      var currentFriend = waypoint.content.friends[f]
+      friendPhoto = currentFriend.photo.url == null ? '' : '<img src="'+ currentFriend.photo.url + '" />';
+      friends +=  '<h4 class="waypoint-title">' + currentFriend.first_name + ' ' + currentFriend.last_name + '</h4>' +
+                  '<p>' + friendPhoto + currentFriend.description +'</p>';
+    }
+
+    var essays = ''
+    for(var e in waypoint.content.essays){
+      var currentEssay = waypoint.content.essays[e]
+      essays += '<div>' +
+                  '<h4 class="waypoint-title">'+ currentEssay.title +'</h4>' +
+                  '<p>' +
+                    '<img src="'+ currentEssay.coverphoto.url +'">' +
+                    currentEssay.body +
+                  '</p>' +
+                '</div>'
+    }
+
+    var popupContent =  '<div class="waypoint-popup">' +
+                          '<div class="content-icons-menu"><ul>' + contentIcons + '</ul></div>' +
+                          '<div class="waypoint-content-container">' +
+                            '<div class="waypoint-content">' +
+                              '<div class="view-content home active">' +
+                                coverphoto +
+                                '<h4 class="waypoint-popup-title">'+ title +'</h4>' +
+                                '<p class="waypoint-popup-body">' +
+                                  body +
+                                '</p>' +
+                              '</div>' +
+                              '<div class="galleries view-content">' + galleries + '</div>' +
+                              '<div class="friends view-content">' + friends + '</div>' +
+                              '<div class="essays view-content">' + essays + '</div>' +
+                              //'<div class="treks view-content">' + treks + '</div>' +
+                            '</div>' +
+                          '</div>' +
+                        '</div>';
+
+    var popupOptions = { className: 'waypoint-popup' }
+    var wpMarker = L.marker([lat, lng]).addTo(m);
+    var wpPopup  = L.popup(popupOptions).setLatLng([lat, lng]).setContent(popupContent);
+    wpMarker.bindPopup(wpPopup);
+
+    indexer.push({
+      id:     waypoint.id,
+      title:  title,
+      body:   body,
+      content: {
+        galleries: [],
+        friends:   [],
+        essays:    [],
+        treks:     []
+      },
+      leaflet: {
+        marker: wpMarker,
+        popup:  wpPopup
+      }
+    });
+  }
+
+  /* Event Listeners */
+
+  // Goto Journey from Right Hud
+  $(document).on('click', '.hud-bottom h6', function () {
+    var j = DriftMapLeaflet.getJourney($(this).data('journey'))
+    j.leaflet.popup.openOn(m)
+  })
+
+  // Goto Waypoint from Journey Leaflet Popup or Right Hud
+  $(document).on('click', '.waypoints-preview li, .hud-bottom .journey p', function () {
+    var wp = DriftMapLeaflet.getWayPoint($(this).data('waypoint'))
+    wp.leaflet.popup.openOn(m)
+    if($('.feed-toggle-container').hasClass('open')){
+      $('.feed-toggle-container').click();
+    }
+  })
+
+  // Goto Waypoint content from contentIcons.
+  $(document).on('click', '.content-icons-menu li', function(){
+    var type  = $(this).data('request-type').toString();
+    $('.waypoint-content .view-content').removeClass('active')
+    $('.waypoint-content .' + type).addClass('active')
+  })
+
+  // Toggle Profile Feed block
+  $(document).on('click', '.feed-toggle-container', function () {
+    $('.profile-hud-container, .profile-hud').toggleClass('collapsed')
+    $(this).toggleClass('open');
+    $('.profile-hud-container .user-details, .profile-hud-container .profile-picture-container').toggleClass('hidden')
+
+    if($(this).hasClass('open')){
+      m.closePopup()
+    }
+  })
+
+  return {
+    // public variables
+
+    // public methods
+    init: function(data){
+      drawMap(data.driftmap);
+
+      // Plot Journey & Waypoint Popups/Markers
+      for(var j in data.journeys){
+        var journeys = data.journeys
+        if(journeys[j].journey !== undefined && journeys[j].waypoints !== undefined){
+          constructJourneyPopup(journeys[j].journey, journeys[j].waypoints)
+          for(var w in journeys[j].waypoints){ constructWaypointPopup(journeys[j].waypoints[w]) }
+        }
+      }
+
+      if(data.journeys.length > 1){
+        journeyIndexer[0].leaflet.marker.setIcon(maroonMarker)
+        journeyIndexer[0].leaflet.popup.openOn(m)
+      }
+    },
+
+    defaultInit: function(){
+      var data = {
+        driftmap: {
+          "id": 0,
+          "title": "",
+          "body":"",
+          "init_x": 0.924206230200376,
+          "init_y": -34.2400771379471,
+          "init_zoom": 1,
+          "user_id": 0,
+          "created_at":"2017-07-10T03:33:32.363Z",
+          "updated_at":"2017-07-10T06:56:32.564Z",
+          "color_scheme":"myDefault"
+        },
+        journeys: {}
+      }
+
+      DriftMapLeaflet.init(data)
+    },
+
+    /* Getters */
+    getWayPoint: function(id){
+      for(var i in indexer)
+        if(indexer[i].id == id)
+          return indexer[i];
+      return false;
+    },
+
+    getJourney: function (id) {
+      for(var i in journeyIndexer)
+        if(journeyIndexer[i].id == id)
+          return journeyIndexer[i];
+        return false;
+    }
+  }
+}();

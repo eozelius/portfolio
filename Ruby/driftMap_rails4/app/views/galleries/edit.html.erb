@@ -1,0 +1,47 @@
+<input type="hidden" id="galleries_edit" value="1">
+
+<div id="galleries" class="container edit-gallery">
+  <%= form_for @gallery, html: { multipart: true } do |f| %>
+    <input type="hidden" name="waypoint_id" value="<%= params[:waypoint_id] %>">
+    <%= f.hidden_field :x, value: @waypoint.x %>
+    <%= f.hidden_field :y, value: @waypoint.y %>
+
+    <div id="driftmap-timeline-container" class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+      <h4 class="waypoint-title" style="color:#C2D9EB;font-size:2.5em;margin-bottom:35px;width: -moz-fit-content;">Edit <%= @gallery.title.html_safe %></h4>
+
+      <div class="gallery-info">
+        <h4 class="waypoint-title">Gallery Title</h4>
+        <%= f.text_field :title, style: 'margin-left:3%;', autofocus: true %>
+
+        <h4 class="waypoint-title">Gallery Description</h4>
+        <%= f.text_area :description, style: 'margin-left:3%;' %>
+
+        <h4 class="waypoint-title" data-photo-index="0">Gallery Coverphoto</h4>
+        <%= f.file_field :coverphoto, style: 'margin-left:3%;' %>
+
+        <h4 class="waypoint-title">Add Photos</h4>
+        <span class="normal add-photo" style="margin: 0 0 35px 3%;"><i class="fa fa-plus"></i> photo</span>
+      </div>
+    </div>
+
+    <div id="dm-legend" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="map-container hidden">
+        <h4 class="waypoint-title">
+          click anywhere on the map to adjust the location of your gallery
+        </h4>
+
+        <div id="map"></div>
+      </div>
+
+      <div class="commit-buttons-container" style="width: 100%; margin-top 5%">
+        <%= link_to(controller: 'waypoints', action: 'content_creation', waypoint_id: params[:waypoint_id], journey_id: params[:journey_id]) do %>
+
+          <span class="normal cancel" style="display: inline-block; margin: 30px 0; float: left">cancel</span>
+        <% end %>
+
+        <button name="commit" class="normal commit" type="submit" style="margin: 30px 0; float: right">save</button>      
+      </div><div class="clearfix"></div>
+    </div>
+  <% end %>
+</div>
+

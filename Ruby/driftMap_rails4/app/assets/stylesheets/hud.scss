@@ -1,0 +1,55 @@
+@import 'colors';
+
+.hud-container {
+  position: absolute;
+  top: 1%;
+  left: 2.2%;
+  bottom: 1%;
+  width: 20%;
+
+  h6.journey-title {
+    font-size: 1.15em;
+    font-weight: 500;
+    color: $maroon;
+    margin: 0;
+  }
+
+  p.wp-title {
+    font-size: 1em;
+    padding-left: 5%;
+  }
+
+  .hud-bottom {
+    background-color: #EAEAEA;
+    opacity: .8;
+    padding: 1% 3%;
+
+    .hud-content-container {
+      margin:0 0 10% 0;
+    }
+  }
+
+  .hud-bottom {
+    position: absolute;
+    top: 1%;
+    right: 5%;
+    bottom: 1%;
+    width: 100%;
+    cursor: pointer;
+
+    p.active {
+      color: #424242;
+      font-weight: 600;
+    }
+  }
+}
+
+#timeline-hud {
+  position: absolute;
+  bottom: 2%;
+  right: 5%;
+  left: 5%;
+  height: 45px;
+  background-color: #78acd3;
+  opacity: .8;
+}

@@ -1,0 +1,64 @@
+<input type="hidden" value="1" id="waypoints_edit">
+
+<div class="container waypoints_edit">
+	<div id="driftmap-timeline-container" class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+		<div class="waypoint-content" data-waypoint="<%= @waypoint.id %>">
+			<h4 class="waypoint-title" style="color:#C2D9EB;font-size:2.5em;margin-bottom:8%;width: -moz-fit-content;">Edit <%= @waypoint.title.capitalize %></h4>
+
+			<%= hidden_field_tag :my_waypoint_date, @waypoint.date %>
+
+			<%= form_for @waypoint, html: { multipart: true } do |f| %>
+				<%= f.hidden_field :x, value: @waypoint.x %>
+				<%= f.hidden_field :y, value: @waypoint.y %>
+
+				<h4 class="waypoint-title">Waypoint Title</h4>
+				<%= f.text_field :title %>
+
+				<h4 class="waypoint-title">Waypoint Description</h4>
+				<%= f.text_area :body %>
+
+				<!-- coverphoto photos -->
+				<h4 class="waypoint-title" data-photo-index="0">Waypoint Coverphoto</h4>
+				<%= f.file_field :coverphoto, { style: 'margin-left:3%;' } %>
+
+				<!-- date -->
+				<div class='input-group date' id='datetimepicker1'>
+					<h4 class="waypoint-title" style="margin:10% 0 8% 8%">Date</h4>
+					<input id="datepicker-input" style="margin: 0% 0 8% 8%; font-size:18px; width:80%; height:38px; padding:4px;" type='text' class="form-control" />
+					<%= f.hidden_field :date %>
+					<span class="input-group-addon" style="float:left; margin-top:0%; height:38px; padding:10px 0 0 1px; width:30px">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			<% end %>
+		</div>
+	</div>
+
+	<div id="dm-legend" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+		<div class="map-container hidden">
+
+			<h4 class="waypoint-title">
+				click and drag the marker to adjust the waypoint location
+			</h4>
+
+			<div id='map'></div>
+		</div>
+
+		<div class="commit-buttons-container" style="width: 100%; margin-top 5%">
+			<%= link_to user_path(current_user), style: 'margin: 0: display: inline-block;' do %>
+				<span class="normal cancel" style="display: inline-block; margin: 30px 0; float: left">cancel</span>
+			<% end %>
+
+			<button name="commit" class="normal commit" type="submit" style="margin: 30px 0; float: right">save</button>
+		</div><div class="clearfix"></div>
+
+		<%= link_to @waypoint, method: :delete, data: { confirm: "Are you Sure?" } do %>
+			<span class="pull-right" style="margin: 14% 0 0; color:red" rel="nofollow" data-method="delete" data-confirm="Are you sure">delete</span>
+		<% end %>
+	</div>
+</div><div class="clear-fix"></div>
+<style type="text/css">
+	.map-container {
+		top: 0;
+	}
+</style>
